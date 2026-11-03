@@ -339,3 +339,7 @@ build_client.py                         # full build pipeline
 ---
 
 FuturisticClient 1.8.9 — legitimate utility, not hacks.
+
+## Download:
+
+https://neon-client-launchpad.lovable.app/

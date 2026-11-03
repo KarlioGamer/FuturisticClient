@@ -1,85 +1,296 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FuturisticClient 3</title>
+    <title>FuturisticClient 3 - Next-Gen Minecraft Client</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            blue: '#00f0ff',
+                            purple: '#7000ff',
+                            dark: '#070913',
+                            card: '#0e1329',
+                            border: '#1e295d'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background-color: #0d0f17;
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            background-color: #070913;
+            color: #e2e8f0;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Canvas background overlay */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Neon Glow Effects */
+        .text-glow {
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.6), 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .box-glow {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+        }
+
+        .box-glow-purple {
+            box-shadow: 0 0 25px rgba(112, 0, 255, 0.2), inset 0 0 15px rgba(112, 0, 255, 0.08);
+        }
+
+        /* Cyber Glassmorphism */
+        .cyber-glass {
+            background: rgba(14, 19, 41, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .cyber-glass:hover {
+            border-color: rgba(0, 240, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.25);
+        }
+
+        /* Futuristic Button Animation */
+        .cyber-btn {
             position: relative;
-        }
-
-        .container {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            border-radius: 16px;
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.1);
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            color: #00e5ff;
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
-            letter-spacing: 2px;
-        }
-
-        .btn-download {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #0d0f17;
-            background: #00e5ff;
-            text-decoration: none;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #00f0ff 0%, #7000ff 100%);
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
         }
 
-        .btn-download:hover {
-            background: #ffffff;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
-            transform: translateY(-2px);
+        .cyber-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.6);
+            filter: brightness(1.15);
         }
 
-        .footer-date {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-size: 0.9rem;
-            color: #a0a0a0;
+        .cyber-btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Grid Background Pattern */
+        .grid-bg {
+            background-image: linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
     </style>
 </head>
-<body>
+<body class="grid-bg min-h-screen flex flex-col justify-between relative selection:bg-cyber-blue selection:text-black">
 
-    <div class="container">
-        <h1>FuturisticClient 3</h1>
-        <a href="https://github.com/KarlioGamer/FuturisticClient/releases/tag/3.0_r1" class="btn-download" target="_blank" rel="noopener noreferrer">
-            Baixar Agora
-        </a>
+    <!-- Interactive Canvas Particles -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Main Content Container -->
+    <div class="relative z-10 flex-grow flex flex-col items-center justify-between px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Header / Navigation Bar -->
+        <header class="w-full max-w-6xl flex justify-between items-center py-4 px-6 rounded-2xl cyber-glass mb-12">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-cyber-blue to-cyber-purple flex items-center justify-center font-orbitron font-extrabold text-xl text-black shadow-lg">
+                    F3
+                </div>
+                <span class="font-orbitron font-bold text-xl tracking-wider text-white">FUTURISTIC<span class="text-cyber-blue">3</span></span>
+            </div>
+            
+            <a href="https://github.com/KarlioGamer/FuturisticClient/releases/tag/3.0_r1" target="_blank" rel="noopener noreferrer" 
+               class="text-xs sm:text-sm font-semibold tracking-wider text-cyber-blue hover:text-white transition flex items-center space-x-2">
+                <i class="fab font-normal fa-github text-lg"></i>
+                <span class="hidden sm:inline">GitHub Repository</span>
+            </a>
+        </header>
+
+        <!-- Hero Section -->
+        <main class="w-full max-w-5xl text-center my-auto py-8">
+            <!-- Title Badge -->
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-cyber-purple/20 border border-cyber-purple/40 text-cyber-blue text-xs sm:text-sm font-semibold mb-6 tracking-widest uppercase animate-pulse">
+                <i class="fas fa-bolt text-cyber-blue"></i>
+                <span>Next Generation Client Released</span>
+            </div>
+
+            <!-- Main Title -->
+            <h1 class="font-orbitron text-5xl sm:text-7xl md:text-8xl font-black text-white tracking-tight uppercase leading-none mb-6">
+                Futuristic<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple text-glow">Client 3</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-lg sm:text-2xl text-gray-300 font-medium max-w-3xl mx-auto mb-10 tracking-wide">
+                The Ultimate Next-Gen Minecraft Experience. Maximize your FPS, customize your setup, and dominate every game mode.
+            </p>
+
+            <!-- Call to Action Button -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a href="https://github.com/KarlioGamer/FuturisticClient/releases/tag/3.0_r1" target="_blank" rel="noopener noreferrer" 
+                   class="cyber-btn w-full sm:w-auto px-10 py-5 font-orbitron font-bold text-lg text-black tracking-widest uppercase flex items-center justify-center space-x-3 group">
+                    <i class="fas fa-download text-xl group-hover:animate-bounce"></i>
+                    <span>Download Now</span>
+                </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-16">
+                <div class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-cyber-card/50 border border-cyber-border/50 text-gray-300">
+                    <i class="fas fa-shield-halved text-cyber-blue text-lg"></i>
+                    <span class="font-medium text-sm">100% Safe & Clean</span>
+                </div>
+                <div class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-cyber-card/50 border border-cyber-border/50 text-gray-300">
+                    <i class="fab fa-github text-cyber-purple text-lg"></i>
+                    <span class="font-medium text-sm">Open Source Code</span>
+                </div>
+                <div class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-cyber-card/50 border border-cyber-border/50 text-gray-300">
+                    <i class="fas fa-check-circle text-emerald-400 text-lg"></i>
+                    <span class="font-medium text-sm">Zero Malware Certified</span>
+                </div>
+            </div>
+
+            <!-- Feature Highlights Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                <!-- Card 1 -->
+                <div class="cyber-glass p-8 rounded-2xl transition duration-300 group">
+                    <div class="w-14 h-14 rounded-xl bg-cyber-blue/10 border border-cyber-blue/30 flex items-center justify-center text-cyber-blue text-2xl mb-6 group-hover:scale-110 group-hover:bg-cyber-blue/20 transition-all">
+                        <i class="fas fa-gauge-high"></i>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-3xl text-white mb-2">+1000 FPS</h3>
+                    <p class="text-gray-400 text-base leading-relaxed">
+                        Next-level engine optimizations, custom memory management, and lightweight rendering for silky-smooth gameplay.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="cyber-glass p-8 rounded-2xl transition duration-300 group">
+                    <div class="w-14 h-14 rounded-xl bg-cyber-purple/10 border border-cyber-purple/30 flex items-center justify-center text-cyber-purple text-2xl mb-6 group-hover:scale-110 group-hover:bg-cyber-purple/20 transition-all">
+                        <i class="fas fa-sliders"></i>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-3xl text-white mb-2">Custom UI</h3>
+                    <p class="text-gray-400 text-base leading-relaxed">
+                        Clean, futuristic, and fully customizable HUD, crosshairs, and menus built for maximum clarity and style.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="cyber-glass p-8 rounded-2xl transition duration-300 group">
+                    <div class="w-14 h-14 rounded-xl bg-cyber-blue/10 border border-cyber-blue/30 flex items-center justify-center text-cyber-blue text-2xl mb-6 group-hover:scale-110 group-hover:bg-cyber-blue/20 transition-all">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3 class="font-orbitron font-bold text-3xl text-white mb-2">+100 Mods</h3>
+                    <p class="text-gray-400 text-base leading-relaxed">
+                        Pre-installed essential quality-of-life mods, PvP utilities, key stroke displays, and custom cosmetic options.
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="w-full max-w-6xl mt-12 pt-6 border-t border-cyber-border/40 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-400 gap-4">
+            <!-- Specified Bottom-Left Message -->
+            <div class="flex items-center space-x-2 font-mono text-xs sm:text-sm text-cyber-blue/90">
+                <span class="inline-block w-2 h-2 rounded-full bg-cyber-blue animate-ping"></span>
+                <span>Updated on 26/10/2026</span>
+            </div>
+
+            <!-- Footer Right Content -->
+            <div class="text-center sm:text-right font-medium">
+                <p>&copy; 2026 FuturisticClient Team. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
 
-    <div class="footer-date">
-        Atualizado em 26/10/2026
-    </div>
+    <!-- Background Particle Script -->
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
 
+        let particles = [];
+        const particleCount = 45;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.color = Math.random() > 0.5 ? '#00f0ff' : '#7000ff';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = function() {
+            animate();
+        };
+    </script>
 </body>
 </html>

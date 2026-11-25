@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FuturisticClient 3 - Next-Gen Minecraft Client</title>
+    <title>FuturisticClient 4.0 - Next-Gen Minecraft Client</title>
     <link rel="preload" as="image" href="Gemini_Generated_Image_ttsgo9ttsgo9ttsg.png">
     <link rel="icon" type="image/png" href="Gemini_Generated_Image_ttsgo9ttsgo9ttsg.png" sizes="48x48">
     <!-- Tailwind CSS -->
@@ -97,6 +97,27 @@
             transform: translateY(1px) scale(0.98);
         }
 
+
+        .showcase-card {
+            overflow: hidden;
+            border-radius: 1rem;
+            background: rgba(14, 19, 41, 0.82);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 240, 255, 0.65);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.18);
+        }
+
+        .showcase-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
         /* Grid Background Pattern */
         .grid-bg {
             background-image: linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
@@ -117,12 +138,12 @@
         <header class="w-full max-w-6xl flex justify-between items-center py-4 px-6 rounded-2xl cyber-glass mb-12">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-cyber-blue to-cyber-purple flex items-center justify-center font-orbitron font-extrabold text-xl text-black shadow-lg">
-                    F3
+                    F4
                 </div>
-                <span class="font-orbitron font-bold text-xl tracking-wider text-white">FUTURISTIC<span class="text-cyber-blue">3</span></span>
+                <span class="font-orbitron font-bold text-xl tracking-wider text-white">FUTURISTIC<span class="text-cyber-blue">4.0</span></span>
             </div>
             
-            <a href="https://github.com/KarlioGamer/FuturisticClient/releases/tag/3.0_r1" target="_blank" rel="noopener noreferrer" 
+            <a href="https://github.com/KarlioGamer/FuturisticClient/releases/tag/4.0" target="_blank" rel="noopener noreferrer" 
                class="text-xs sm:text-sm font-semibold tracking-wider text-cyber-blue hover:text-white transition flex items-center space-x-2">
                 <i class="fab font-normal fa-github text-lg"></i>
                 <span class="hidden sm:inline">GitHub Repository</span>
@@ -139,7 +160,7 @@
 
             <!-- Main Title -->
             <h1 class="font-orbitron text-5xl sm:text-7xl md:text-8xl font-black text-white tracking-tight uppercase leading-none mb-6">
-                Futuristic<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple text-glow">Client 3</span>
+                Futuristic<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple text-glow">Client 4.0</span>
             </h1>
 
             <!-- Subtitle -->
@@ -149,7 +170,7 @@
 
             <!-- Call to Action Button -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-                <a href="https://github.com/KarlioGamer/FuturisticClient/releases/download/3.0_r1/FuturisticClient_3.0_Update_1.zip" target="_blank" rel="noopener noreferrer" 
+                <a href="https://github.com/KarlioGamer/FuturisticClient/releases/download/4.0/FuturisticClient_4.0.zip" target="_blank" rel="noopener noreferrer" 
                    class="cyber-btn w-full sm:w-auto px-10 py-5 font-orbitron font-bold text-lg text-black tracking-widest uppercase flex items-center justify-center space-x-3 group">
                     <i class="fas fa-download text-xl group-hover:animate-bounce"></i>
                     <span>Download Now</span>
@@ -207,6 +228,53 @@
                     </p>
                 </div>
             </div>
+
+            <!-- FuturisticClient 4.0 Screenshot Gallery -->
+            <section class="w-full max-w-6xl mt-20 mb-8" aria-labelledby="showcase-title">
+                <div class="text-center mb-10">
+                    <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-cyber-purple/20 border border-cyber-purple/40 text-cyber-blue text-xs sm:text-sm font-semibold mb-4 tracking-widest uppercase">
+                        <i class="fas fa-images"></i>
+                        <span>Version 4.0 Showcase</span>
+                    </div>
+                    <h2 id="showcase-title" class="font-orbitron text-3xl sm:text-5xl font-black text-white mb-3">
+                        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple text-glow">FuturisticClient 4.0</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg sm:text-xl">Take a look at the new interface and redesigned menus.</p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-8">
+                    <article class="showcase-card">
+                        <div class="p-5 sm:p-6">
+                            <h3 class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-4">Menu</h3>
+                            <img src="assets/MenuStyle.png" alt="FuturisticClient 4.0 main menu" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="showcase-card">
+                        <div class="p-5 sm:p-6">
+                            <h3 class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-4">SinglePlayer UI</h3>
+                            <img src="assets/singleplayerstyle.png" alt="FuturisticClient 4.0 singleplayer worlds interface" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="showcase-card">
+                        <div class="p-5 sm:p-6">
+                            <h3 class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-4">Multiplayer UI</h3>
+                            <img src="assets/multiplayerstyle.png" alt="FuturisticClient 4.0 multiplayer servers interface" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="showcase-card">
+                        <div class="p-5 sm:p-6">
+                            <h3 class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-4">ClickGUI UI</h3>
+                            <img src="assets/ClickGUIStyle.png" alt="FuturisticClient 4.0 ClickGUI modules interface" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                    <article class="showcase-card">
+                        <div class="p-5 sm:p-6">
+                            <h3 class="font-orbitron text-xl sm:text-2xl font-bold text-white mb-4">Pause Menu</h3>
+                            <img src="assets/pausemenustyle.png" alt="FuturisticClient 4.0 pause menu interface" loading="lazy" decoding="async">
+                        </div>
+                    </article>
+                </div>
+            </section>
         </main>
 
         <!-- Footer -->
@@ -214,7 +282,7 @@
             <!-- Specified Bottom-Left Message -->
             <div class="flex items-center space-x-2 font-mono text-xs sm:text-sm text-cyber-blue/90">
                 <span class="inline-block w-2 h-2 rounded-full bg-cyber-blue animate-ping"></span>
-                <span>Updated on 26/10/2026</span>
+                <span>Updated on 24/11/2026</span>
             </div>
 
             <!-- Footer Right Content -->
